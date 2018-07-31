@@ -37,7 +37,7 @@ VOLUME ["/config", \
         "/var/run/mysqld/mysqld.sock"]
 
 # === phusion/baseimage pre-work
-CMD ["/sbin/my_init"]
+#CMD ["/sbin/my_init"]
 
 # === General System
 
@@ -98,7 +98,7 @@ RUN mkdir -p \
         /config \
         /opt/observium/html \
         /opt/observium/logs \
-        /opt/observium/rrd \
+        /opt/observium/rrd
 
 # === Webserver - Apache + PHP5
 
@@ -142,3 +142,4 @@ COPY cron.d /etc/cron.d/
 # === phusion/baseimage post-work
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD ["/bin/bash", "-c", "/etc/my_init.d/*.sh"]
