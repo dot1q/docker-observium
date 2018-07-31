@@ -100,7 +100,7 @@ RUN mkdir -p \
         /opt/observium/logs \
         /opt/observium/rrd \
 
-# === Webserver - Apache + PHP5
+# === Webserver - Apache + PHP7
 
 RUN phpenmod mcrypt && \
     a2dismod mpm_event && \
