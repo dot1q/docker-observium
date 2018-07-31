@@ -27,8 +27,8 @@
 #                                 socket instead of using TCP.
 #
 #
-FROM ubuntu:16.04
-MAINTAINER Gregory Brewster <gbrewster@sandynet.org>
+FROM phusion/baseimage:0.10.1
+MAINTAINER Codey Oxley <codey@yelp.com>
 EXPOSE 8000/tcp
 VOLUME ["/config", \
         "/opt/observium/html", \
@@ -37,7 +37,7 @@ VOLUME ["/config", \
         "/var/run/mysqld/mysqld.sock"]
 
 # === phusion/baseimage pre-work
-#CMD ["/sbin/my_init"]
+CMD ["/sbin/my_init"]
 
 # === General System
 
@@ -98,7 +98,7 @@ RUN mkdir -p \
         /config \
         /opt/observium/html \
         /opt/observium/logs \
-        /opt/observium/rrd
+        /opt/observium/rrd \
 
 # === Webserver - Apache + PHP5
 
@@ -108,7 +108,7 @@ RUN phpenmod mcrypt && \
     a2enmod php7.0 && \
     a2enmod rewrite
 
-RUN mkdir -p /etc/service/apache2
+RUN mkdir /etc/service/apache2
 COPY bin/service/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
 
@@ -125,6 +125,12 @@ COPY ["conf/apache2.conf", "conf/ports.conf", "/etc/apache2/"]
 COPY conf/apache-observium /etc/apache2/sites-available/000-default.conf
 COPY conf/rrdcached /etc/default/rrdcached
 RUN rm /etc/apache2/sites-available/default-ssl.conf && \
+    echo www-data > /etc/container_environment/APACHE_RUN_USER && \
+    echo www-data > /etc/container_environment/APACHE_RUN_GROUP && \
+    echo /var/log/apache2 > /etc/container_environment/APACHE_LOG_DIR && \
+    echo /var/lock/apache2 > /etc/container_environment/APACHE_LOCK_DIR && \
+    echo /var/run/apache2.pid > /etc/container_environment/APACHE_PID_FILE && \
+    echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
     chown -R www-data:www-data /var/log/apache2 && \
     rm -Rf /var/www && \
     ln -s /opt/observium/html /var/www
@@ -135,4 +141,3 @@ COPY cron.d /etc/cron.d/
 # === phusion/baseimage post-work
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-CMD ["/bin/bash", "-c", "/etc/my_init.d/*.sh"]
