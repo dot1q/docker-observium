@@ -58,3 +58,4 @@ ln -s /config/config.php /opt/observium/config.php
 # readability.
 chown nobody:users -R /opt/observium
 chmod 755 -R /opt/observium
+php /opt/observium/discovery.php -u
