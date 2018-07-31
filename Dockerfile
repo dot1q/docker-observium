@@ -135,5 +135,4 @@ COPY cron.d /etc/cron.d/
 # === phusion/baseimage post-work
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN ["/bin/bash", "-c", "/etc/my_init.d/*.sh"]
-CMD ["/bin/bash", "-c", "/etc/init.d/apache2", "start"]
+CMD ["/bin/bash", "-c", "/etc/my_init.d/*.sh"]
