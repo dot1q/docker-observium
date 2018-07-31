@@ -125,13 +125,6 @@ COPY ["conf/apache2.conf", "conf/ports.conf", "/etc/apache2/"]
 COPY conf/apache-observium /etc/apache2/sites-available/000-default.conf
 COPY conf/rrdcached /etc/default/rrdcached
 RUN rm /etc/apache2/sites-available/default-ssl.conf && \
-    mkdir -p /etc/container_environment && \
-    echo www-data > /etc/container_environment/APACHE_RUN_USER && \
-    echo www-data > /etc/container_environment/APACHE_RUN_GROUP && \
-    echo /var/log/apache2 > /etc/container_environment/APACHE_LOG_DIR && \
-    echo /var/lock/apache2 > /etc/container_environment/APACHE_LOCK_DIR && \
-    echo /var/run/apache2.pid > /etc/container_environment/APACHE_PID_FILE && \
-    echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
     chown -R www-data:www-data /var/log/apache2 && \
     rm -Rf /var/www && \
     ln -s /opt/observium/html /var/www
