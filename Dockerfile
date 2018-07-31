@@ -27,8 +27,8 @@
 #                                 socket instead of using TCP.
 #
 #
-FROM phusion/baseimage:0.10.1
-MAINTAINER Codey Oxley <codey@yelp.com>
+FROM ubuntu:16.04
+MAINTAINER Gregory Brewster <gbrewster@sandynet.org>
 EXPOSE 8000/tcp
 VOLUME ["/config", \
         "/opt/observium/html", \
@@ -59,12 +59,10 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-# Install locales
-RUN locale-gen en_US.UTF-8
-
 # Install Observium prereqs
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
+      apache2 \
       at \
       fping \
       git \
@@ -72,18 +70,18 @@ RUN apt-get update -q && \
       graphviz \
       imagemagick \
       ipmitool \
-      libapache2-mod-php5 \
+      libapache2-mod-php7.0 \
       libvirt-bin \
       mariadb-client \
       mtr-tiny \
       nmap \
-      php5-cli \
-      php5-gd \
-      php5-json \
-      php5-ldap \
-      php5-mcrypt \
-      php5-mysql \
-      php5-snmp \
+      php7.0-cli \
+      php7.0-gd \
+      php7.0-json \
+      php7.0-ldap \
+      php7.0-mcrypt \
+      php7.0-mysqli \
+      php7.0-snmp \
       php-pear \
       pwgen \
       python-mysqldb \
@@ -104,10 +102,13 @@ RUN mkdir -p \
 
 # === Webserver - Apache + PHP5
 
-RUN php5enmod mcrypt && \
+RUN phpenmod mcrypt && \
+    a2dismod mpm_event && \
+    a2enmod mpm_prefork && \
+    a2enmod php7.0 && \
     a2enmod rewrite
 
-RUN mkdir /etc/service/apache2
+RUN mkdir -p /etc/service/apache2
 COPY bin/service/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
 
@@ -124,6 +125,7 @@ COPY ["conf/apache2.conf", "conf/ports.conf", "/etc/apache2/"]
 COPY conf/apache-observium /etc/apache2/sites-available/000-default.conf
 COPY conf/rrdcached /etc/default/rrdcached
 RUN rm /etc/apache2/sites-available/default-ssl.conf && \
+    mkdir -p /etc/container_environment && \
     echo www-data > /etc/container_environment/APACHE_RUN_USER && \
     echo www-data > /etc/container_environment/APACHE_RUN_GROUP && \
     echo /var/log/apache2 > /etc/container_environment/APACHE_LOG_DIR && \
