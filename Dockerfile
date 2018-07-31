@@ -108,9 +108,9 @@ RUN phpenmod mcrypt && \
     a2enmod php7.0 && \
     a2enmod rewrite
 
-# RUN mkdir -p /etc/service/apache2
-# COPY bin/service/apache2.sh /etc/service/apache2/run
-# RUN chmod +x /etc/service/apache2/r
+RUN mkdir -p /etc/service/apache2
+COPY bin/service/apache2.sh /etc/service/apache2/run
+RUN chmod +x /etc/service/apache2/r
 
 # Boot-time init scripts for phusion/baseimage
 COPY bin/my_init.d /etc/my_init.d/
