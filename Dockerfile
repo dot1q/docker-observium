@@ -62,6 +62,7 @@ ENV LANGUAGE en_US.UTF-8
 # Install Observium prereqs
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
+      apache2 \
       at \
       fping \
       git \
@@ -91,8 +92,7 @@ RUN apt-get update -q && \
       subversion \
       unzip \
       wget \
-      whois \
-      apache2
+      whois
 
 RUN mkdir -p \
         /config \
@@ -108,9 +108,9 @@ RUN phpenmod mcrypt && \
     a2enmod php7.0 && \
     a2enmod rewrite
 
-RUN mkdir -p /etc/service/apache2
-COPY bin/service/apache2.sh /etc/service/apache2/run
-RUN chmod +x /etc/service/apache2/run
+# RUN mkdir -p /etc/service/apache2
+# COPY bin/service/apache2.sh /etc/service/apache2/run
+# RUN chmod +x /etc/service/apache2/r
 
 # Boot-time init scripts for phusion/baseimage
 COPY bin/my_init.d /etc/my_init.d/
@@ -135,5 +135,5 @@ COPY cron.d /etc/cron.d/
 # === phusion/baseimage post-work
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-CMD ["/bin/bash", "-c", "/etc/my_init.d/*.sh"]
-CMD ["/bin/bash", "-c", "/etc/service/apache2/run"]
+RUN ["/bin/bash", "-c", "/etc/my_init.d/*.sh"]
+CMD ["/bin/bash", "-c", "/etc/init.d/apache2", "start"]
