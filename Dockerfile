@@ -62,7 +62,6 @@ ENV LANGUAGE en_US.UTF-8
 # Install Observium prereqs
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
-      apache2 \
       at \
       fping \
       git \
@@ -92,7 +91,8 @@ RUN apt-get update -q && \
       subversion \
       unzip \
       wget \
-      whois
+      whois \
+      apache2
 
 RUN mkdir -p \
         /config \
