@@ -15,7 +15,7 @@ professional_svn() {
         cd /opt/observium &&
         svn up --non-interactive \
             --username $SVN_USER \
-            --password $SVN_PASS && \
+            --password $SVN_PASS
     else 
         cd /opt &&
         svn co --non-interactive \
