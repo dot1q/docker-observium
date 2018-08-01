@@ -28,7 +28,8 @@ fi
 # SVN to temp directory and copying contents into /opt/observium was just the
 # first way thought of to avoid dealing with the svn conflict resolution from
 # script.
-mv /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+shopt -s dotglob
+mv /tmp/observium/* /opt/observium/
 
 # == Configuration section
 
