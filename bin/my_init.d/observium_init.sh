@@ -13,7 +13,8 @@ community_http() {
 }
 
 professional_svn() {
-    if [ -d /opt/observium/.svn ] ; then
+    if [ -d /opt/observium/.svn ] ;
+    then
         cd /opt/observium
         svn update --non-interactive \
             --username $SVN_USER \
