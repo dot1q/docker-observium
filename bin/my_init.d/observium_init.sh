@@ -16,7 +16,6 @@ professional_svn() {
         svn up --non-interactive \
             --username $SVN_USER \
             --password $SVN_PASS && \
-        ./discovery.php -u
     else 
         cd /opt &&
         svn co --non-interactive \
@@ -32,17 +31,9 @@ professional_svn() {
 if [[ "$USE_SVN" == "true" && "$SVN_USER" && "$SVN_PASS" && "$SVN_REPO" ]]
 then
     professional_svn
-    /opt/observium/discovery.php -u
 else
     community_http
-    /opt/observium/discovery.php -u
 fi
-# I know this seems ridiculous, but since /opt/observium/html is an external
-# volume mount, svn throws a fit about it conflicting with the tree. Pulling
-# SVN to temp directory and copying contents into /opt/observium was just the
-# first way thought of to avoid dealing with the svn conflict resolution from
-# script.
-
 
 # == Configuration section
 
@@ -62,6 +53,7 @@ else
   PW=$(date | sha256sum | cut -b -31)
   sed -i -e 's/PASSWORD/'$PW'/g' /config/config.php
   sed -i -e 's/USERNAME/observium/g' /config/config.php
+  echo "/opt/observium/discovery.php -u" | at -M now + 1 minute
 fi
 
 ln -s /config/config.php /opt/observium/config.php

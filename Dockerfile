@@ -31,9 +31,7 @@ FROM phusion/baseimage:0.10.1
 MAINTAINER Codey Oxley <codey@yelp.com>
 EXPOSE 8000/tcp
 VOLUME ["/config", \
-        "/opt/observium/html", \
-        "/opt/observium/logs", \
-        "/opt/observium/rrd", \
+        "/opt/observium/", \
         "/var/run/mysqld/mysqld.sock"]
 
 # === phusion/baseimage pre-work
@@ -132,8 +130,8 @@ RUN rm /etc/apache2/sites-available/default-ssl.conf && \
     echo /var/run/apache2.pid > /etc/container_environment/APACHE_PID_FILE && \
     echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
     chown -R www-data:www-data /var/log/apache2 && \
-    rm -Rf /var/www && \
-    ln -s /opt/observium/html /var/www
+    #rm -Rf /var/www && \
+    #ln -s /opt/observium/html /var/www
 
 # === Cron and finishing
 COPY cron.d /etc/cron.d/
