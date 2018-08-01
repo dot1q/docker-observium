@@ -15,7 +15,9 @@ community_http() {
 professional_svn() {
     if [ -d /opt/observium/.svn ] ; then
         cd /opt/observium
-        svn update
+        svn update --non-interactive \
+            --username $SVN_USER \
+            --password $SVN_PASS \
         ./discovery.php -u
     else 
         cd /tmp &&
