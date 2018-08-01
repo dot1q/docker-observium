@@ -29,7 +29,7 @@ fi
 # first way thought of to avoid dealing with the svn conflict resolution from
 # script.
 shopt -s dotglob
-mv /tmp/observium/* /opt/observium/
+cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
 
 # == Configuration section
 
