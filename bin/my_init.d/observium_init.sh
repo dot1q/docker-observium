@@ -7,17 +7,15 @@ community_http() {
     wget http://www.observium.org/observium-community-latest.tar.gz &&
     tar xvf observium-community-latest.tar.gz &&
     rm observium-community-latest.tar.gz
-
-    #shopt -s dotglob
-    #cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
-    /opt/observium/discovery.php -u
 }
 
 professional_svn() {
     if [ -d /opt/observium/.svn ] ;
     then
         cd /opt/observium &&
-        svn up && \
+        svn up --non-interactive \
+            --username $SVN_USER \
+            --password $SVN_PASS && \
         ./discovery.php -u
     else 
         cd /opt &&
@@ -34,11 +32,11 @@ professional_svn() {
 if [[ "$USE_SVN" == "true" && "$SVN_USER" && "$SVN_PASS" && "$SVN_REPO" ]]
 then
     professional_svn
+    /opt/observium/discovery.php -u
 else
     community_http
+    /opt/observium/discovery.php -u
 fi
-
-/opt/observium/discovery.php -u
 # I know this seems ridiculous, but since /opt/observium/html is an external
 # volume mount, svn throws a fit about it conflicting with the tree. Pulling
 # SVN to temp directory and copying contents into /opt/observium was just the
