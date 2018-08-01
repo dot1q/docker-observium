@@ -7,14 +7,26 @@ community_http() {
     wget http://www.observium.org/observium-community-latest.tar.gz &&
     tar xvf observium-community-latest.tar.gz &&
     rm observium-community-latest.tar.gz
+
+    shopt -s dotglob
+    cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
 }
 
 professional_svn() {
-    cd /tmp &&
-    svn co --non-interactive \
-           --username $SVN_USER \
-           --password $SVN_PASS \
-           $SVN_REPO observium
+    if [ -d /opt/observium/.svn to a directory ] ; then
+        cd /opt/observium
+        svn update
+        ./discovery.php -u
+    else 
+        cd /tmp &&
+        svn co --non-interactive \
+            --username $SVN_USER \
+            --password $SVN_PASS \
+            $SVN_REPO observium
+
+        shopt -s dotglob
+        cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+    fi
 }
 
 if [[ "$USE_SVN" == "true" && "$SVN_USER" && "$SVN_PASS" && "$SVN_REPO" ]]
@@ -28,8 +40,7 @@ fi
 # SVN to temp directory and copying contents into /opt/observium was just the
 # first way thought of to avoid dealing with the svn conflict resolution from
 # script.
-shopt -s dotglob
-cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+
 
 # == Configuration section
 
