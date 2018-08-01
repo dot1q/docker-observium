@@ -13,7 +13,7 @@ community_http() {
 }
 
 professional_svn() {
-    if [ -d /opt/observium/.svn to a directory ] ; then
+    if [ -d /opt/observium/.svn ] ; then
         cd /opt/observium
         svn update
         ./discovery.php -u
