@@ -3,7 +3,7 @@
 # == Fetch proper Observium version
 
 community_http() {
-    cd /opt/observium &&
+    cd /opt &&
     wget http://www.observium.org/observium-community-latest.tar.gz &&
     tar xvf observium-community-latest.tar.gz &&
     rm observium-community-latest.tar.gz
@@ -20,7 +20,7 @@ professional_svn() {
         svn up && \
         ./discovery.php -u
     else 
-        cd /opt/observium &&
+        cd /opt &&
         svn co --non-interactive \
             --username $SVN_USER \
             --password $SVN_PASS \
