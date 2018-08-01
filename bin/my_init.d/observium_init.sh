@@ -3,32 +3,31 @@
 # == Fetch proper Observium version
 
 community_http() {
-    cd /tmp &&
+    cd /opt/observium &&
     wget http://www.observium.org/observium-community-latest.tar.gz &&
     tar xvf observium-community-latest.tar.gz &&
     rm observium-community-latest.tar.gz
 
-    shopt -s dotglob
-    cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+    #shopt -s dotglob
+    #cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+    /opt/observium/discovery.php -u
 }
 
 professional_svn() {
     if [ -d /opt/observium/.svn ] ;
     then
-        cd /opt/observium
-        svn update --non-interactive \
-            --username $SVN_USER \
-            --password $SVN_PASS
+        cd /opt/observium &&
+        svn up && \
         ./discovery.php -u
     else 
-        cd /tmp &&
+        cd /opt/observium &&
         svn co --non-interactive \
             --username $SVN_USER \
             --password $SVN_PASS \
             $SVN_REPO observium
 
-        shopt -s dotglob
-        cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+        #shopt -s dotglob
+        #cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
     fi
 }
 
@@ -38,6 +37,8 @@ then
 else
     community_http
 fi
+
+/opt/observium/discovery.php -u
 # I know this seems ridiculous, but since /opt/observium/html is an external
 # volume mount, svn throws a fit about it conflicting with the tree. Pulling
 # SVN to temp directory and copying contents into /opt/observium was just the
@@ -73,4 +74,3 @@ ln -s /config/config.php /opt/observium/config.php
 # readability.
 chown nobody:users -R /opt/observium
 chmod 755 -R /opt/observium
-/opt/observium/discovery.php -u
