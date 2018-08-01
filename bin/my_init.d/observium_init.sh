@@ -18,7 +18,7 @@ professional_svn() {
         cd /opt/observium
         svn update --non-interactive \
             --username $SVN_USER \
-            --password $SVN_PASS \
+            --password $SVN_PASS
         ./discovery.php -u
     else 
         cd /tmp &&
