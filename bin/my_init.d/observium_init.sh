@@ -16,6 +16,8 @@ professional_svn() {
         svn up --non-interactive \
             --username $SVN_USER \
             --password $SVN_PASS
+
+            /opt/observium/discovery.php -u
     else 
         cd /opt &&
         svn co --non-interactive \
