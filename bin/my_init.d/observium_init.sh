@@ -17,7 +17,7 @@ professional_svn() {
             --username $SVN_USER \
             --password $SVN_PASS \
             $SVN_REPO observium
-        cp -r /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+        cp -rn /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
         /opt/observium/discovery.php -u
     fi
 }
