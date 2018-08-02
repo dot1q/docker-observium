@@ -17,7 +17,7 @@ professional_svn() {
             --username $SVN_USER \
             --password $SVN_PASS
 
-            /opt/observium/discovery.php -u
+        /opt/observium/discovery.php -u
     else 
         cd /opt &&
         svn co --non-interactive \
@@ -25,8 +25,7 @@ professional_svn() {
             --password $SVN_PASS \
             $SVN_REPO observium
 
-        #shopt -s dotglob
-        #cp -a /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
+        /opt/observium/discovery.php -u
     fi
 }
 
