@@ -19,7 +19,7 @@ professional_svn() {
 
         /opt/observium/discovery.php -u
     else 
-        cd /tmp &&
+        cd /opt &&
         svn co --force --non-interactive \
             --username $SVN_USER \
             --password $SVN_PASS \
