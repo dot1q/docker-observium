@@ -2,13 +2,6 @@
 
 # == Fetch proper Observium version
 
-community_http() {
-    cd /opt &&
-    wget http://www.observium.org/observium-community-latest.tar.gz &&
-    tar xvf observium-community-latest.tar.gz &&
-    rm observium-community-latest.tar.gz
-}
-
 professional_svn() {
     if [ -d /opt/observium/.svn ] ;
     then
@@ -19,12 +12,12 @@ professional_svn() {
 
         /opt/observium/discovery.php -u
     else 
-        cd /opt &&
+        cd /tmp &&
         svn co --non-interactive \
             --username $SVN_USER \
             --password $SVN_PASS \
             $SVN_REPO observium
-
+        cp -r /tmp/observium/* /opt/observium/ && rm -rf /tmp/observium
         /opt/observium/discovery.php -u
     fi
 }
@@ -33,7 +26,7 @@ if [[ "$USE_SVN" == "true" && "$SVN_USER" && "$SVN_PASS" && "$SVN_REPO" ]]
 then
     professional_svn
 else
-    community_http
+    echo "Must use professional edition"
 fi
 
 # == Configuration section
