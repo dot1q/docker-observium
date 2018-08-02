@@ -40,7 +40,7 @@ CMD ["/sbin/my_init"]
 # === General System
 
 # yelp/observium env mostly for reference
-ENV WORKERS 2
+ENV WORKERS 4
 ENV WEATHERMAP false
 ENV CUSTOM_PHP_INI false
 ENV HOUSEKEEPING_ARGS '-yet'
