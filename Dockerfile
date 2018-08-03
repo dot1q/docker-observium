@@ -83,6 +83,7 @@ RUN apt-get update -q && \
       php-pear \
       pwgen \
       python-mysqldb \
+      rancid \
       rrdcached \
       rrdtool \
       snmp \
@@ -99,6 +100,8 @@ RUN mkdir -p \
         /opt/observium/rrd \
 
 # === Webserver - Apache + PHP7
+RUN runuser -l rancid -c '/var/lib/rancid/bin/rancid-cvs'
+
 
 RUN phpenmod mcrypt && \
     a2dismod mpm_event && \
@@ -129,7 +132,8 @@ RUN rm /etc/apache2/sites-available/default-ssl.conf && \
     echo /var/lock/apache2 > /etc/container_environment/APACHE_LOCK_DIR && \
     echo /var/run/apache2.pid > /etc/container_environment/APACHE_PID_FILE && \
     echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
-    chown -R www-data:www-data /var/log/apache2
+    chown -R www-data:www-data /var/log/apache2 && \
+    usermod -a -G rancid www-data
     #rm -Rf /var/www && \
     #ln -s /opt/observium/html /var/www
 # === Cron and finishing
