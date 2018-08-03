@@ -97,7 +97,7 @@ RUN mkdir -p \
         /config \
         /opt/observium/html \
         /opt/observium/logs \
-        /opt/observium/rrd \
+        /opt/observium/rrd
 
 # === Webserver - Apache + PHP7
 RUN runuser -l rancid -c '/var/lib/rancid/bin/rancid-cvs'
