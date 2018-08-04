@@ -101,8 +101,7 @@ RUN mkdir -p \
 
 # === Webserver - Apache + PHP7
 COPY conf/rancid.conf /etc/rancid/rancid.conf
-RUN adduser --disabled-password --gecos "" rancid
-RUN runuser -l rancid -c '/var/lib/rancid/bin/rancid-cvs'
+RUN /var/lib/rancid/bin/rancid-cvs
 
 
 RUN phpenmod mcrypt && \
