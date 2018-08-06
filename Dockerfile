@@ -57,9 +57,6 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-RUN echo "postfix postfix/mailname string observium.aws.sandynet.org" | debconf-set-selections
-RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-
 # Install Observium prereqs
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
@@ -74,6 +71,7 @@ RUN apt-get update -q && \
       libapache2-mod-php7.0 \
       libvirt-bin \
       mariadb-client \
+      postfix \
       mailutils \ 
       mtr-tiny \
       nmap \
@@ -85,7 +83,6 @@ RUN apt-get update -q && \
       php7.0-mysqli \
       php7.0-snmp \
       php-pear \
-      postfix \
       pwgen \
       python-mysqldb \
       rancid \
