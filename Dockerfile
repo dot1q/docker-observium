@@ -89,6 +89,7 @@ RUN apt-get update -q && \
       snmp \
       software-properties-common \
       subversion \
+      telnet \
       unzip \
       wget \
       whois
@@ -102,6 +103,8 @@ RUN mkdir -p \
 # === Webserver - Apache + PHP7
 COPY conf/rancid.conf /etc/rancid/rancid.conf
 RUN /var/lib/rancid/bin/rancid-cvs
+# Symoblic link for .cloginrc in the root home dir
+RUN ln -s /var/lib/rancid/.cloginrc /root/
 
 
 RUN phpenmod mcrypt && \
