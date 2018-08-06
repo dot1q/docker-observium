@@ -17,3 +17,4 @@
 0 5 * * *     root  /var/lib/rancid/bin/rancid-run
 
 50 23 * * *   root  /usr/bin/find /var/lib/rancid/logs -type f -mtime   +2 -exec rm {} \;
+
