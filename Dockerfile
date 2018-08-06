@@ -57,6 +57,9 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
+RUN debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"
+RUN debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+
 # Install Observium prereqs
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
@@ -81,6 +84,7 @@ RUN apt-get update -q && \
       php7.0-mysqli \
       php7.0-snmp \
       php-pear \
+      postfix \
       pwgen \
       python-mysqldb \
       rancid \
@@ -105,7 +109,6 @@ COPY conf/rancid.conf /etc/rancid/rancid.conf
 RUN /var/lib/rancid/bin/rancid-cvs
 # Symoblic link for .cloginrc in the root home dir
 RUN ln -s /var/lib/rancid/.cloginrc /root/
-
 
 RUN phpenmod mcrypt && \
     a2dismod mpm_event && \
