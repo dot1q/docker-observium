@@ -71,8 +71,6 @@ RUN apt-get update -q && \
       libapache2-mod-php7.0 \
       libvirt-bin \
       mariadb-client \
-      postfix \
-      mailutils \ 
       mtr-tiny \
       nmap \
       php7.0-cli \
@@ -107,6 +105,7 @@ COPY conf/rancid.conf /etc/rancid/rancid.conf
 RUN /var/lib/rancid/bin/rancid-cvs
 # Symoblic link for .cloginrc in the root home dir
 RUN ln -s /var/lib/rancid/.cloginrc /root/
+
 
 RUN phpenmod mcrypt && \
     a2dismod mpm_event && \
