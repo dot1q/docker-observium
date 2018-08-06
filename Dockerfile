@@ -74,6 +74,7 @@ RUN apt-get update -q && \
       libapache2-mod-php7.0 \
       libvirt-bin \
       mariadb-client \
+      mailutils \ 
       mtr-tiny \
       nmap \
       php7.0-cli \
