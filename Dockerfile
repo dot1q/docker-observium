@@ -57,12 +57,11 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-RUN debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"
-RUN debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-
 # Install Observium prereqs
-RUN apt-get update -q && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update -q
+RUN debconf-set-selections <<< "postfix postfix/mailname string observium.aws.sandynet.org"
+RUN debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+RUN apt-get install -y --no-install-recommends \
       apache2 \
       at \
       fping \
