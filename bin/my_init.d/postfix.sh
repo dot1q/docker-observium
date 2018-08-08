@@ -8,10 +8,10 @@ if ! [ "${MAIL_INET_PROTOCOLS}" = "" ]; then
     sed -i "s/inet_protocols =.*/inet_protocols = ${MAIL_INET_PROTOCOLS}/" /etc/postfix/main.cf
 fi
 sed -i "s/myhostname =.*/myhostname = $(hostname)/" /etc/postfix/main.cf
-sed -i "s/mydestination =.*/mydestination = ${NAGIOS_FQDN}, \$myhostname, localhost.localdomain, localhost/" /etc/postfix/main.cf
+sed -i "s/mydestination =.*/mydestination = ${FQDN}, \$myhostname, localhost.localdomain, localhost/" /etc/postfix/main.cf
 
 sed -i "/^myorigin =.*/d" /etc/postfix/main.cf
-echo "${NAGIOS_FQDN}" > /etc/mailname
+echo "${FQDN}" > /etc/mailname
 
 #postfix runs in a chroot and needs resolv.conf to resolve hostnames
 cp /etc/resolv.conf /var/spool/postfix/etc/resolv.conf
