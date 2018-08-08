@@ -48,6 +48,7 @@ ENV USE_SVN false
 ENV SVN_USER ''
 ENV SVN_PASS ''
 ENV SVN_REPO ''
+ENV FQDN 'observium.example.com'
 
 # Avoid any interactive prompting
 ENV DEBIAN_FRONTEND noninteractive
@@ -56,6 +57,10 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
+
+RUN echo postfix postfix/main_mailer_type string "'Internet Site'" | debconf-set-selections  && \
+    echo postfix postfix/mynetworks string "127.0.0.0/8" | debconf-set-selections            && \
+    echo postfix postfix/mailname string ${FQDN} | debconf-set-selections   
 
 # Install Observium prereqs
 RUN apt-get update -q && \
@@ -83,6 +88,7 @@ RUN apt-get update -q && \
       php-pear \
       pwgen \
       python-mysqldb \
+      postfix \
       rancid \
       rrdcached \
       rrdtool \
@@ -142,6 +148,9 @@ RUN rm /etc/apache2/sites-available/default-ssl.conf && \
     #ln -s /opt/observium/html /var/www
 # === Cron and finishing
 COPY cron.d /etc/cron.d/
+
+RUN cp /etc/services /var/spool/postfix/etc/  && \
+    echo "smtp_address_preference = ipv4" >> /etc/postfix/main.cf
 
 # === phusion/baseimage post-work
 # Clean up APT when done
