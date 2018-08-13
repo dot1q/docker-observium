@@ -14,6 +14,7 @@
 47 4 * * *    root  /opt/observium/housekeeping.php -yrptb >> /dev/null 2>&1
 
 #hourly router dump
+50 4 * * *    root  php /opt/observium/scripts/generate-rancid.php > /var/lib/rancid/observium/router.db
 0 5 * * *     root  /var/lib/rancid/bin/rancid-run
 
 50 23 * * *   root  /usr/bin/find /var/lib/rancid/logs -type f -mtime   +2 -exec rm {} \;
