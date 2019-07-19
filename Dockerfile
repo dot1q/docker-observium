@@ -27,8 +27,7 @@
 #                                 socket instead of using TCP.
 #
 #
-FROM phusion/baseimage:0.10.1
-MAINTAINER Codey Oxley <codey@yelp.com>
+FROM phusion/baseimage:0.11
 EXPOSE 8000/tcp
 VOLUME ["/config", \
         "/opt/observium/", \
@@ -59,6 +58,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8 
 
 # Install Observium prereqs
+RUN apt-add-repository universe && apt-add-repository multiverse
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
       apache2 \
@@ -69,18 +69,17 @@ RUN apt-get update -q && \
       graphviz \
       imagemagick \
       ipmitool \
-      libapache2-mod-php7.0 \
+      libapache2-mod-php7.2 \
       libvirt-bin \
       mariadb-client \
       mtr-tiny \
       nmap \
-      php7.0-cli \
-      php7.0-gd \
-      php7.0-json \
-      php7.0-ldap \
-      php7.0-mcrypt \
-      php7.0-mysqli \
-      php7.0-snmp \
+      php7.2-cli \
+      php7.2-gd \
+      php7.2-json \
+      php7.2-ldap \
+      php7.2-mysqli \
+      php7.2-snmp \
       php-pear \
       pwgen \
       python-mysqldb \
@@ -109,10 +108,9 @@ RUN /var/lib/rancid/bin/rancid-cvs
 RUN ln -s /var/lib/rancid/.cloginrc /root/
 
 
-RUN phpenmod mcrypt && \
-    a2dismod mpm_event && \
+RUN a2dismod mpm_event && \
     a2enmod mpm_prefork && \
-    a2enmod php7.0 && \
+    a2enmod php7.2 && \
     a2enmod rewrite
 
 RUN mkdir /etc/service/apache2

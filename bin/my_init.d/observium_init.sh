@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#append new hosts to the host file
+cat /tmp/hosts >> /etc/hosts
+
 # == Fetch proper Observium version
 
 community_http() {

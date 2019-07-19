@@ -66,7 +66,7 @@ The following volumes are set in the container:
 
 If you need to sub-in random, single files just add an extra `-v` argument to
 your run (or however you're starting the container. Puppet anyone?) to the
-path. We do this for `/etc/php/7.0/apache2/php.ini`
+path. We do this for `/etc/php/7.2/apache2/php.ini`
 
 Ports
 -----
