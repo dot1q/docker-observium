@@ -117,7 +117,6 @@ RUN a2dismod mpm_event && \
     a2enmod rewrite
 
 RUN mkdir /etc/service/apache2
-RUN adduser rancid --disabled-password --system --shell /bin/bash --group
 RUN chown rancid:rancid -R /var/lib/rancid
 COPY bin/service/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
