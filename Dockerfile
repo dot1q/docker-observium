@@ -104,12 +104,13 @@ RUN mkdir -p \
 # === Webserver - Apache + PHP7
 COPY conf/rancid.conf /etc/rancid/rancid.conf
 RUN useradd -ms /bin/bash rancid
+RUN chown rancid:rancid -R /var/lib/rancid
 USER rancid
 RUN /var/lib/rancid/bin/rancid-cvs
+USER root
 
 # Symoblic link for .cloginrc in the root home dir
 RUN ln -s /var/lib/rancid/.cloginrc /root/
-USER root
 
 RUN a2dismod mpm_event && \
     a2enmod mpm_prefork && \
@@ -117,7 +118,6 @@ RUN a2dismod mpm_event && \
     a2enmod rewrite
 
 RUN mkdir /etc/service/apache2
-RUN chown rancid:rancid -R /var/lib/rancid
 COPY bin/service/apache2.sh /etc/service/apache2/run
 RUN chmod +x /etc/service/apache2/run
 
