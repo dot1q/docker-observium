@@ -69,3 +69,5 @@ ln -s /config/config.php /opt/observium/config.php
 chown nobody:users -R /opt/observium
 chmod 755 -R /opt/observium
 service sendmail start
+
+su - rancid -c /var/lib/rancid/bin/rancid-cvs

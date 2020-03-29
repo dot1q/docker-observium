@@ -138,7 +138,8 @@ RUN rm /etc/apache2/sites-available/default-ssl.conf && \
     echo /var/run/apache2.pid > /etc/container_environment/APACHE_PID_FILE && \
     echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
     chown -R www-data:www-data /var/log/apache2 && \
-    usermod -a -G root www-data
+    usermod -a -G root www-data && \ 
+    usermod -a -G rancid www-data
     #rm -Rf /var/www && \
     #ln -s /opt/observium/html /var/www
 # === Cron and finishing
