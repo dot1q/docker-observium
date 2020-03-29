@@ -67,6 +67,7 @@ ln -s /config/config.php /opt/observium/config.php
 # taken out of Dockerfile unless anyone thinks it hurts the Dockerfile
 # readability.
 chown nobody:users -R /opt/observium
+chown -R rancid:rancid /var/log/rancid/
 chmod 755 -R /opt/observium
 service sendmail start
 

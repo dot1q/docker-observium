@@ -107,7 +107,7 @@ RUN useradd -ms /bin/bash rancid
 RUN chown rancid:rancid -R /var/lib/rancid
 
 # Symoblic link for .cloginrc in the root home dir
-RUN ln -s /var/lib/rancid/.cloginrc /root/
+RUN ln -s /var/lib/rancid/.cloginrc /home/rancid/
 
 RUN a2dismod mpm_event && \
     a2enmod mpm_prefork && \
