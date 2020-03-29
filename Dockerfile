@@ -105,9 +105,6 @@ RUN mkdir -p \
 COPY conf/rancid.conf /etc/rancid/rancid.conf
 RUN useradd -ms /bin/bash rancid
 RUN chown rancid:rancid -R /var/lib/rancid
-USER rancid
-RUN /var/lib/rancid/bin/rancid-cvs
-USER root
 
 # Symoblic link for .cloginrc in the root home dir
 RUN ln -s /var/lib/rancid/.cloginrc /root/
