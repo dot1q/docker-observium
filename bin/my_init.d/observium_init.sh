@@ -71,4 +71,5 @@ chown -R rancid:rancid /var/log/rancid/
 chmod 755 -R /opt/observium
 service sendmail start
 
+chown -R rancid:rancid SVN
 su - rancid -c /var/lib/rancid/bin/rancid-cvs
