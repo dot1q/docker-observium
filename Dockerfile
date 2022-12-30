@@ -27,7 +27,7 @@
 #                                 socket instead of using TCP.
 #
 #
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:focal-1.2.0
 EXPOSE 8000/tcp
 VOLUME ["/config", \
         "/opt/observium/", \
