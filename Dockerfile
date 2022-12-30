@@ -61,39 +61,33 @@ ENV LANGUAGE en_US.UTF-8
 RUN apt-add-repository universe && apt-add-repository multiverse
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
-      apache2 \
-      at \
-      fping \
-      git \
-      graphviz \
-      graphviz \
-      imagemagick \
-      ipmitool \
-      libapache2-mod-php7.2 \
-      libvirt-bin \
-      mariadb-client \
-      mtr-tiny \
-      nmap \
-      php7.2-cli \
-      php7.2-gd \
-      php7.2-json \
-      php7.2-ldap \
-      php7.2-mysqli \
-      php7.2-snmp \
-      php-pear \
-      pwgen \
-      python-mysqldb \
-      sendmail \
-      rancid \
-      rrdcached \
-      rrdtool \
-      snmp \
-      software-properties-common \
-      subversion \
-      telnet \
-      unzip \
-      wget \
-      whois
+        libapache2-mod-php7.4 \
+        php7.4-cli \
+        php7.4-mysql \
+        php7.4-gd \
+        php7.4-json \
+        php7.4-bcmath \
+        php7.4-mbstring \
+        php7.4-opcache \
+        php7.4-curl \
+        php-apcu \
+        php-pear \
+        snmp \
+        fping \
+        rrdtool \
+        whois \
+        mysql-server \
+        mysql-client \
+        subversion \
+        mtr-tiny \
+        ipmitool \
+        graphviz \
+        imagemagick \
+        apache2 \
+        python3-mysqldb \
+        python3-pymysql \
+        python-is-python3
+
 
 RUN mkdir -p \
         /config \
