@@ -1,11 +1,8 @@
 # Run a complete discovery of all devices once every 6 hours
 33 */6 * * *  root  /opt/observium/discovery.php -h all >> /dev/null 2>&1
 
-# Run automated discovery of newly added devices every 5 minutes
-#*/5 * * * *  root  /opt/observium/discovery.php -h new >> /dev/null 2>&1
-
 # Run multithreaded poller wrapper every 5 minutes
-*/5 * * * *   root  /opt/observium/poller-wrapper.py 4 >> /dev/null 2>&1
+*/5 * * * *   root  /opt/observium/poller-wrapper.py >> /dev/null 2>&1
 
 # Run housekeeping script daily for syslog, eventlog and alert log
 13 5 * * *    root  /opt/observium/housekeeping.php -ysel >> /dev/null 2>&1
@@ -15,6 +12,8 @@
 
 #hourly router dump
 50 4 * * *    root  php /opt/observium/scripts/generate-rancid.php > /var/lib/rancid/observium/router.db
+
+# Rancid Run daily
 0 5 * * *     rancid  /var/lib/rancid/bin/rancid-run
 
 50 23 * * *   root  /usr/bin/find /var/lib/rancid/logs -type f -mtime   +2 -exec rm {} \;
