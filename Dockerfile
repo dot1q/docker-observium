@@ -86,7 +86,11 @@ RUN apt-get update -q && \
         apache2 \
         python3-mysqldb \
         python3-pymysql \
-        python-is-python3
+        python-is-python3 \
+        rancid \
+        unzip \
+        wget \
+        rrdcached
 
 
 RUN mkdir -p \
@@ -103,10 +107,11 @@ RUN chown rancid:rancid -R /var/lib/rancid
 # Symoblic link for .cloginrc in the root home dir
 RUN ln -s /var/lib/rancid/.cloginrc /home/rancid/
 
-RUN a2dismod mpm_event && \
-    a2enmod mpm_prefork && \
-    a2enmod php7.2 && \
-    a2enmod rewrite
+RUN phpenmod mcrypt
+RUN a2dismod mpm_event
+RUN a2enmod mpm_prefork
+RUN a2enmod php7.4
+RUN a2enmod rewrite
 
 RUN mkdir /etc/service/apache2
 COPY bin/service/apache2.sh /etc/service/apache2/run
