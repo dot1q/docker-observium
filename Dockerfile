@@ -90,7 +90,8 @@ RUN apt-get update -q && \
         rancid \
         unzip \
         wget \
-        rrdcached
+        rrdcached \
+        sendmail
 
 
 RUN mkdir -p \
