@@ -27,7 +27,7 @@
 #                                 socket instead of using TCP.
 #
 #
-FROM phusion/baseimage:focal-1.2.0
+FROM phusion/baseimage:jammy
 EXPOSE 8000/tcp
 VOLUME ["/config", \
         "/opt/observium/", \
@@ -61,24 +61,22 @@ ENV LANGUAGE en_US.UTF-8
 RUN apt-add-repository universe && apt-add-repository multiverse
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends \
-        libapache2-mod-php7.4 \
-        php7.4-cli \
-        php7.4-mysql \
-        php7.4-gd \
-        php7.4-json \
-        php7.4-bcmath \
-        php7.4-mbstring \
-        php7.4-opcache \
-        php7.4-curl \
+        libapache2-mod-php8.1 \
+        php8.1-cli \
+        php8.1-mysql \
+        php8.1-gd \
+        php8.1-bcmath \
+        php8.1-mbstring \
+        php8.1-opcache \
+        php8.1-curl \
         php-apcu \
         php-pear \
         snmp \
         fping \
-        rrdtool \
-        whois \
         mysql-server \
         mysql-client \
-        subversion \
+        rrdtool subversion \
+        whois \
         mtr-tiny \
         ipmitool \
         graphviz \
@@ -89,9 +87,8 @@ RUN apt-get update -q && \
         python-is-python3 \
         rancid \
         unzip \
-        wget \
-        rrdcached \
-        sendmail
+        wget
+
 
 
 RUN mkdir -p \
@@ -108,10 +105,9 @@ RUN chown rancid:rancid -R /var/lib/rancid
 # Symoblic link for .cloginrc in the root home dir
 RUN ln -s /var/lib/rancid/.cloginrc /home/rancid/
 
-RUN phpenmod mcrypt
 RUN a2dismod mpm_event
 RUN a2enmod mpm_prefork
-RUN a2enmod php7.4
+RUN a2enmod php8.1
 RUN a2enmod rewrite
 
 RUN mkdir /etc/service/apache2
